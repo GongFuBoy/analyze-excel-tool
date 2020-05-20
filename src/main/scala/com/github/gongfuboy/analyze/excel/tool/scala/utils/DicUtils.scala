@@ -9,10 +9,10 @@ import scala.collection.JavaConversions._
 
 
 /**
-  * 相关字典生成工具类
-  *
-  * Created by GongFuBoy on 2020/5/19.
-  */
+ * 相关字典生成工具类
+ *
+ * Created by GongFuBoy on 2020/5/19.
+ */
 object DicUtils {
 
   def main(args: Array[String]): Unit = {

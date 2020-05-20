@@ -13,9 +13,15 @@ class Analyzer {
   def analyzeCity(sourceString: java.lang.String, dicAnalysis: DicAnalysis): java.lang.String = {
     val result: Result = dicAnalysis.parseStr(sourceString)
     val maybeInt = result.getTerms.toList.zipWithIndex.find(temp => temp._1.getName.equals("mark1")).map(_._2)
+    if (maybeInt.isEmpty) return ""
     val xianRenMarkWordIndex = maybeInt.getOrElse(result.getTerms.size())
     val xianRenTermList = result.getTerms.toList.subList(xianRenMarkWordIndex, result.getTerms.size())
-    ""
+    if (xianRenTermList.isEmpty) return ""
+    val zhiweiMarkWordIndex: Int = xianRenTermList.toList.zipWithIndex.find({
+      case (term, _) => term.getName.equals("mark2")
+    }).map(_._2).getOrElse(xianRenTermList.size())
+    val zhiweiTermList = result.getTerms.toList.subList(zhiweiMarkWordIndex, result.getTerms.size())
+    zhiweiTermList.toList.find(termWord => termWord.getName.equals("city")).map(_.getNatureStr).getOrElse("")
   }
 
 

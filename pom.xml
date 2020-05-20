@@ -7,7 +7,7 @@
     <groupId>com.github.gongfuboy</groupId>
     <artifactId>analyze-excel-tool</artifactId>
     <version>0.0.1</version>
-    <name>github-crawler</name>
+    <name>analyze-excel-tool</name>
     <url>https://github.com/gongfuboy</url>
 
     <properties>
@@ -139,6 +139,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
