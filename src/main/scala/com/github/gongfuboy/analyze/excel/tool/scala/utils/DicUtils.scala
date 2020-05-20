@@ -27,10 +27,21 @@ object DicUtils {
       cityLine.replaceAll("\\d+", "").trim
     })
 
-    val fileDicUrl = url.getFile.replaceAll("city.txt", "city.dic")
+    val fileDicUrl = url.getFile.replaceAll("city.txt", "user.dic")
     val dicFile = new File(fileDicUrl)
     if (!dicFile.exists()) dicFile.createNewFile()
-    IOUtils.writeLines(replacedCityStrings, " " + "city" + " " + "1000" + System.getProperty("line.separator"), new FileOutputStream(dicFile))
+
+    // 写入城市字段
+    val fileStream = new FileOutputStream(dicFile)
+    IOUtils.writeLines(replacedCityStrings, "\t" + "city" + "\t" + "1000" + System.getProperty("line.separator"), fileStream)
+
+    // 写入现任标识字段
+    val mark1FileUrl = url.getFile.replaceAll("city.txt", "mark1.txt")
+    IOUtils.writeLines(IOUtils.readLines(new FileInputStream(mark1FileUrl)), "\t" + "mark1" + "\t" + "1000" + System.getProperty("line.separator"), fileStream)
+
+    // 写入城市标识字段
+    val mark2FileUrl = url.getFile.replaceAll("city.txt", "mark2.txt")
+    IOUtils.writeLines(IOUtils.readLines(new FileInputStream(mark2FileUrl)), "\t" + "mark2" + "\t" + "1000" + System.getProperty("line.separator"), fileStream)
   }
 
 }

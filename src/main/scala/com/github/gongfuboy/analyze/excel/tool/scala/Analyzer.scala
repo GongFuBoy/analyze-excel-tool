@@ -10,27 +10,19 @@ import scala.collection.JavaConversions._
   */
 class Analyzer {
 
-  def analyzeCity(sourceString: java.lang.String, dicAnalysis: DicAnalysis): java.lang.String = {
-    val result: Result = dicAnalysis.parseStr(sourceString)
-    val maybeInt = result.getTerms.toList.zipWithIndex.find(temp => temp._1.getName.equals("mark1")).map(_._2)
+  def analyzeCity(sourceString: java.lang.String): java.lang.String = {
+    val result = DicAnalysis.parse(sourceString)
+    val maybeInt = result.getTerms.toList.zipWithIndex.find(temp => temp._1.getNatureStr.equals("mark1")).map(_._2)
     if (maybeInt.isEmpty) return ""
     val xianRenMarkWordIndex = maybeInt.getOrElse(result.getTerms.size())
     val xianRenTermList = result.getTerms.toList.subList(xianRenMarkWordIndex, result.getTerms.size())
     if (xianRenTermList.isEmpty) return ""
     val zhiweiMarkWordIndex: Int = xianRenTermList.toList.zipWithIndex.find({
-      case (term, _) => term.getName.equals("mark2")
+      case (term, _) => term.getNatureStr.equals("mark2")
     }).map(_._2).getOrElse(xianRenTermList.size())
     val zhiweiTermList = result.getTerms.toList.subList(zhiweiMarkWordIndex, result.getTerms.size())
-    zhiweiTermList.toList.find(termWord => termWord.getName.equals("city")).map(_.getNatureStr).getOrElse("")
+    zhiweiTermList.toList.find(termWord => termWord.getNatureStr.equals("city")).map(_.getName).getOrElse("")
   }
 
-
-}
-
-object Analyzer {
-
-  def main(args: Array[String]): Unit = {
-    println(List(1, 2, 3).subList(3, 3))
-  }
 
 }
