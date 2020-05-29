@@ -5,7 +5,7 @@ import java.net.URL
 
 import org.apache.commons.io.IOUtils
 
-import scala.collection.JavaConversions._
+import scala.jdk.CollectionConverters._
 
 
 /**
@@ -23,7 +23,7 @@ object DicUtils {
     val url: URL = this.getClass.getClassLoader.getResource("city.txt")
     val stream = new FileInputStream(url.getFile)
     val cityLines = IOUtils.readLines(stream)
-    val replacedCityStrings = cityLines.toList.map(cityLine => {
+    val replacedCityStrings = cityLines.asScala.toList.map(cityLine => {
       cityLine.replaceAll("\\d+", "").trim
     })
 
@@ -33,7 +33,7 @@ object DicUtils {
 
     // 写入城市字段
     val fileStream = new FileOutputStream(dicFile)
-    IOUtils.writeLines(replacedCityStrings, "\t" + "city" + "\t" + "1000" + System.getProperty("line.separator"), fileStream)
+    IOUtils.writeLines(replacedCityStrings.asJava, "\t" + "city" + "\t" + "1000" + System.getProperty("line.separator"), fileStream)
 
     // 写入现任标识字段
     val mark1FileUrl = url.getFile.replaceAll("city.txt", "mark1.txt")
